@@ -1,3 +1,13 @@
-<p>
-  todo-list works!
-</p>
+{{todos | json}}
+
+<ul class="list">
+  <li
+    *ngFor="let todo of todos"
+    class="list__item"
+  >
+    <app-todo-item
+      [todo]="todo"
+      (check)="checkTodo($event)"
+    ></app-todo-item>
+  </li>
+</ul>
