@@ -1,3 +1,19 @@
-<h1>
-  {{title}}
-</h1>
+<div class="container">
+  <h1>
+    Текущее значение {{counterValue}}
+  </h1>
+
+  <p *ngIf="counterValue < 5">
+    А ну-ка поднажми!
+  </p>
+
+  <div>
+    <button (click)="changeCounterValue()">Опятнадцатерить</button>
+  </div>
+  <br><br>
+
+  <app-counter
+    [counterValue]="counterValue"
+    (counterChange)="changeCounter($event)"
+  ></app-counter>
+</div>
