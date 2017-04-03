@@ -1,0 +1,55 @@
+.task {
+  padding: 10px 40px;
+  border-bottom: 1px solid #ededed;
+  cursor: pointer;
+  position: relative;
+}
+
+.task_done {
+  text-decoration: line-through;
+  color: lightgray;
+}
+
+.task__status {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  border: 1px solid;
+  border-radius: 10px;
+  text-align: center;
+  color: lightgrey;
+  cursor: pointer;
+}
+
+.task__name {
+  display: block;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.task_done .task__status {
+  color: lightgreen;
+}
+
+.task_done .task__status::after {
+  content: "\2713"; /*✓ CHECK MARK*/
+}
+
+.task__delete-button {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: red;
+  font-size: 12px;
+  visibility: hidden;
+  cursor: pointer;
+}
+
+.task:hover .task__delete-button {
+  visibility: visible;
+}
