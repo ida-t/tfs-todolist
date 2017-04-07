@@ -1,41 +1,26 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ITodo} from '../shared/model/itodo';
 import {TodoStatus} from "../shared/constants/todo-status.enum";
 import {Filter} from "../shared/constants/filter.enum";
+import {TodosService} from "../shared/model/todos.service";
 
 @Component({
   selector: 'app-todo-list',
   templateUrl: './todo-list.component.html',
   styleUrls: ['./todo-list.component.css']
 })
-export class TodoListComponent {
+export class TodoListComponent implements OnInit {
 
   currentFilter: Filter = Filter.ALL;
-
   label: string = '123';
+  todos: ITodo[] = [];
 
-  todos: ITodo[] = [
-    {
-      name: 'Позвонить в сервис',
-      status: TodoStatus.TODO,
-      time: new Date()
-    },
-    {
-      name: 'Купить хлеб',
-      status: TodoStatus.TODO
-    },
-    {
-      name: 'Захватить мир',
-      status: TodoStatus.DONE
-    },
-    {
-      name: 'Добавить тудушку в список',
-      status: TodoStatus.TODO
-    }
-  ];
+  constructor(private todosService: TodosService) {
 
-  constructor() {
+  }
 
+  ngOnInit() {
+    this.updateTodos();
   }
 
   onFilterChange(value: Filter) {
@@ -57,7 +42,7 @@ export class TodoListComponent {
   }
 
   submit() {
-    const isTodoExists = this.checkTodoName(this.label);
+    const isTodoExists = this.todosService.checkTodoName(this.label);
 
     if (!isTodoExists) {
       this.addTodo(this.label);
@@ -66,35 +51,21 @@ export class TodoListComponent {
   }
 
   addTodo(name: string) {
-    this.todos = this.todos.concat([
-      TodoListComponent.createNewTodo(name)
-    ]);
+    this.todosService.addTodo(name);
+    this.updateTodos();
   }
 
   checkTodo(todoToCheck: ITodo) {
-    const status = todoToCheck.status === TodoStatus.TODO ? TodoStatus.DONE : TodoStatus.TODO;
-    const newTodo = Object.assign({}, todoToCheck, {status});
-    this.todos = this.todos.map(
-      todo => todo.name !== todoToCheck.name ? todo : newTodo
-    );
+    this.todosService.checkTodo(todoToCheck);
+    this.updateTodos();
   }
 
   deleteTodo(todoToDelete: ITodo) {
-    this.todos = this.todos.filter(
-      todo => todo.name !== todoToDelete.name
-    );
+    this.todosService.deleteTodo(todoToDelete);
+    this.updateTodos();
   }
 
-  private checkTodoName(nameToCheck): boolean {
-    return this.todos.some(
-      ({name}) => name === nameToCheck
-    );
-  }
-
-  static createNewTodo(name: string): ITodo {
-    return {
-      name,
-      status: TodoStatus.TODO
-    };
+  private updateTodos() {
+    this.todos = this.todosService.getTodos();
   }
 }
