@@ -1,0 +1,19 @@
+<div class="filters">
+  <div
+    class="filters__item"
+    [class.filters__item_selected]="isActive(filter.ALL)"
+    (click)="setFilter(filter.ALL)">все
+  </div>
+  <div
+    class="filters__item"
+    [class.filters__item_selected]="isActive(filter.DONE)"
+    (click)="setFilter(filter.DONE)">завершенные
+  </div>
+  <div
+    class="filters__item"
+    [class.filters__item_selected]="isActive(filter.TODO)"
+    (click)="setFilter(filter.TODO)">незавершенные
+  </div>
+</div>
+
+{{filter | json}}

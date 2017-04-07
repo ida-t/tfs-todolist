@@ -1,4 +1,16 @@
-{{todos | json}}
+<form class="add-task" (ngSubmit)="submit()">
+  <input
+    type="text"
+    class="add-task__input"
+    [(ngModel)]="label"
+    name="label">
+</form>
+
+<app-filters
+  [currentFilter]="currentFilter"
+  (filterChange)="onFilterChange($event)"></app-filters>
+
+<h1>CurrentFilter = {{currentFilter}}</h1>
 
 <ul class="list">
   <li
@@ -6,8 +18,14 @@
     class="list__item"
   >
     <app-todo-item
+      *ngIf="checkFilter(todo)"
       [todo]="todo"
       (check)="checkTodo($event)"
+      (delete)="deleteTodo($event)"
     ></app-todo-item>
   </li>
 </ul>
+
+<app-stats [todos]="todos"></app-stats>
+
+{{todos | json}}

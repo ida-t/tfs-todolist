@@ -8,7 +8,9 @@ import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 export class CounterComponent implements OnInit {
 
   @Input() counterValue;
-  @Output() counterChange = new EventEmitter();
+
+  @Output()
+  counterChange = new EventEmitter();
 
   constructor() {
   }

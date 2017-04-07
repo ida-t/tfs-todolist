@@ -7,13 +7,17 @@ import { AppComponent } from './app.component';
 import { CounterComponent } from './counter/counter.component';
 import { TodoListComponent } from './todo-list/todo-list.component';
 import { TodoItemComponent } from './todo-item/todo-item.component';
+import { StatsComponent } from './stats/stats.component';
+import { FiltersComponent } from './filters/filters.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CounterComponent,
     TodoListComponent,
-    TodoItemComponent
+    TodoItemComponent,
+    StatsComponent,
+    FiltersComponent
   ],
   imports: [
     BrowserModule,

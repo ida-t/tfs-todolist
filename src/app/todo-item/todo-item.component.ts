@@ -12,6 +12,7 @@ export class TodoItemComponent implements OnInit {
   @Input() todo: ITodo;
 
   @Output() check = new EventEmitter();
+  @Output() delete = new EventEmitter();
 
   constructor() {
   }
@@ -23,7 +24,15 @@ export class TodoItemComponent implements OnInit {
     this.check.emit(this.todo);
   }
 
+  deleteTodo() {
+    this.delete.emit(this.todo);
+  }
+
   isDone() {
+    return this.todo.status === TodoStatus.DONE;
+  }
+
+  get done() {
     return this.todo.status === TodoStatus.DONE;
   }
 }
