@@ -3,6 +3,7 @@ import {ITodo} from '../shared/model/itodo';
 import {TodoStatus} from "../shared/constants/todo-status.enum";
 import {Filter} from "../shared/constants/filter.enum";
 import {TodosService} from "../shared/model/todos.service";
+import {TodosAsyncService} from "../shared/model/todos-async.service";
 
 @Component({
   selector: 'app-todo-list',
@@ -15,7 +16,8 @@ export class TodoListComponent implements OnInit {
   label: string = '123';
   todos: ITodo[] = [];
 
-  constructor(private todosService: TodosService) {
+  constructor(private todosService: TodosService,
+              private todosAsyncService: TodosAsyncService) {
 
   }
 
@@ -51,13 +53,23 @@ export class TodoListComponent implements OnInit {
   }
 
   addTodo(name: string) {
-    this.todosService.addTodo(name);
-    this.updateTodos();
+    // this.todosService.addTodo(name);
+    // this.updateTodos();
+
+    this.todosAsyncService.addTodo(name)
+      .subscribe(res => {
+        this.updateTodos();
+      });
   }
 
   checkTodo(todoToCheck: ITodo) {
-    this.todosService.checkTodo(todoToCheck);
-    this.updateTodos();
+    this.todosAsyncService.checkTodo(todoToCheck)
+      .subscribe((res) => {
+        this.updateTodos();
+      });
+
+    // this.todosService.checkTodo(todoToCheck);
+    // this.updateTodos();
   }
 
   deleteTodo(todoToDelete: ITodo) {
@@ -66,6 +78,9 @@ export class TodoListComponent implements OnInit {
   }
 
   private updateTodos() {
-    this.todos = this.todosService.getTodos();
+    this.todosAsyncService.getTodos()
+      .subscribe((res) => {
+        this.todos = res;
+      });
   }
 }

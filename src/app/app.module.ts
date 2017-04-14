@@ -14,6 +14,7 @@ import {Example2Component} from './di/example2/example2.component';
 import {DiSharedService} from "./di/di-shared.service";
 import {DiNestedService} from "./di/di-nested.service";
 import {TodosService} from "./shared/model/todos.service";
+import {TodosAsyncService} from "./shared/model/todos-async.service";
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import {TodosService} from "./shared/model/todos.service";
   providers: [
     DiSharedService,
     DiNestedService,
-    TodosService
+    TodosService,
+    TodosAsyncService
   ],
   bootstrap: [AppComponent]
 })
