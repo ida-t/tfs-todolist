@@ -37,6 +37,10 @@ export class TodosAsyncService {
     return this.http.post(`${BASE_URL}.json`, newTodo);
   }
 
+  deleteTodo(todoToDelete: ITodo) {
+    return this.http.delete(`${BASE_URL}/${todoToDelete.key}/.json`);
+  }
+
   checkTodo(todoToCheck: ITodo) {
     const status = todoToCheck.status === TodoStatus.TODO ? TodoStatus.DONE : TodoStatus.TODO;
 

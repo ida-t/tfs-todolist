@@ -44,8 +44,7 @@ export class TodoListComponent implements OnInit {
   }
 
   submit() {
-    const isTodoExists = this.todosService.checkTodoName(this.label);
-
+    const isTodoExists =  this.todos.some(todo => todo.name === this.label);
     if (!isTodoExists) {
       this.addTodo(this.label);
       this.label = '';
@@ -53,9 +52,6 @@ export class TodoListComponent implements OnInit {
   }
 
   addTodo(name: string) {
-    // this.todosService.addTodo(name);
-    // this.updateTodos();
-
     this.todosAsyncService.addTodo(name)
       .subscribe(res => {
         this.updateTodos();
@@ -67,14 +63,13 @@ export class TodoListComponent implements OnInit {
       .subscribe((res) => {
         this.updateTodos();
       });
-
-    // this.todosService.checkTodo(todoToCheck);
-    // this.updateTodos();
   }
 
   deleteTodo(todoToDelete: ITodo) {
-    this.todosService.deleteTodo(todoToDelete);
-    this.updateTodos();
+    this.todosAsyncService.deleteTodo(todoToDelete)
+      .subscribe((res) => {
+        this.updateTodos();
+      });
   }
 
   private updateTodos() {
